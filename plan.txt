@@ -1,0 +1,26 @@
+-> Create task assign model for digital marketing and content writing
+    * create a new task update model for digital marketing and content writing and store the updates
+    the task update model should contain the following fields:
+    task id
+    task name
+    task description
+    task status
+    task priority
+    task update date
+    task assignee
+    task assignee name
+    task comments
+    task progress
+    task attachments
+    task leads information
+
+    * the task can be created by the digital marketing and content writing team
+    
+-> create a model called revenue for the digital marketing and content writing team to update revenue generated from each project and task
+    * the model should contain the following fields:
+    project id
+    task id
+    project revenue
+    project status
+    revenue details
+

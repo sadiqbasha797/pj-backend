@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const NotificationSchema = new Schema({
-    recipient: {
+    recipient: [{
         type: Schema.Types.ObjectId,
         required: false,
-    },
+    }],
     content: {
         type: String,
         required: true
@@ -22,11 +22,12 @@ const NotificationSchema = new Schema({
         type: String,
         required: true
     },
-    date: {
+    createdAt: {
         type: Date,
         default: Date.now
     }
 });
 
 const Notification = mongoose.model('Notification', NotificationSchema);
+
 module.exports = Notification;

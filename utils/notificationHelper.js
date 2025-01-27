@@ -2,6 +2,8 @@ const Notification = require('../models/Notification');
 const Developer = require('../models/Developer');
 const Manager = require('../models/Manager');
 const Admin = require('../models/Admin');
+const DigitalMarketingRole = require('../models/digitalMarketingRole');
+const ContentCreator = require('../models/contentCreator');
 
 const createNotification = async (recipients, content, type, relatedId) => {
     const notification = new Notification({

@@ -51,6 +51,20 @@ const {
 const {registerManager} = require('../controllers/managerController');
 const {registerDeveloper} = require('../controllers/developerController');
 const {registerClient, getAllClients, deleteClient, updateClient} = require('../controllers/clientController');
+const { 
+    createMarketingTask,
+    updateMarketingTask,
+    getAllMarketingTasks,
+    getMarketingTaskById,
+    getMarketingTasksByProject,
+    deleteMarketingTask,
+    updateLeadsCount
+} = require('../controllers/marketingTaskController');
+const {addComment, deleteComment, getTaskUpdates} = require('../controllers/taskUpdateController');
+const {getAllMembers,adminDeleteUser,register} = require('../controllers/digitalMarketingController');
+const {createRevenue, deleteRevenue, updateRevenue,getRevenueByProject,getAllRevenue} = require('../controllers/revenueController');
+const {getAllContentCreatorMembers,adminDeleteContentCreator,registerContentCreator} = require('../controllers/contentCreatorController');
+const {getTasksByUserId} = require('../controllers/marketingTaskController');
 // Register a new admin
 router.post('/register', registerAdmin);
 router.post('/register-manager', verifyAdminToken, registerManager);
@@ -132,4 +146,77 @@ router.delete('/task/:taskId/update/:updateId', verifyAdminToken, deleteTaskUpda
 router.get('/notifications', verifyAdminToken, getAllNotifications);
 router.put('/notifications/:notificationId/read', verifyAdminToken, markNotificationAsRead);
 router.put('/notifications/mark-all-read', verifyAdminToken, markAllNotificationsAsRead);
+// Marketing Task Routes
+router.post(
+    '/marketing-task', 
+    verifyAdminToken, 
+    upload.fields([
+        { name: 'relatedDocs', maxCount: 5 },
+        { name: 'media', maxCount: 5 }
+    ]), 
+    createMarketingTask
+);
+
+router.put(
+    '/marketing-task/:taskId', 
+    verifyAdminToken, 
+    upload.fields([
+        { name: 'relatedDocs', maxCount: 5 },
+        { name: 'media', maxCount: 5 }
+    ]), 
+    updateMarketingTask
+);
+
+router.get(
+    '/marketing-tasks', 
+    verifyAdminToken, 
+    getAllMarketingTasks
+);
+
+router.get(
+    '/marketing-task/:taskId', 
+    verifyAdminToken, 
+    getMarketingTaskById
+);
+
+router.get(
+    '/project/:projectId/marketing-tasks', 
+    verifyAdminToken, 
+    getMarketingTasksByProject
+);
+
+router.delete(
+    '/marketing-task/:taskId', 
+    verifyAdminToken, 
+    deleteMarketingTask
+);
+
+router.put(
+    '/marketing-task/:taskId/leads', 
+    verifyAdminToken, 
+    updateLeadsCount
+);
+
+//comment
+router.get('/task-updates/:taskId', verifyAdminToken, getTaskUpdates);
+router.post('/comment/:updateId', verifyAdminToken, addComment);
+router.delete('/comment/:updateId/:commentId', verifyAdminToken, deleteComment);
+//revenue
+router.post('/revenue', verifyAdminToken, createRevenue);
+router.get('/revenue', verifyAdminToken, getAllRevenue);
+router.delete('/revenue/:revenueId', verifyAdminToken, deleteRevenue);
+router.put('/revenue/:revenueId', verifyAdminToken, updateRevenue);
+router.get('/revenue/:projectId', verifyAdminToken, getRevenueByProject); 
+//digital marketing
+router.get('/digital-marketing-members', verifyAdminToken, getAllMembers);
+//content creator
+router.get('/content-creator-members', verifyAdminToken, getAllContentCreatorMembers);
+//digital marketing user
+router.delete('/digital-marketing-user/:userId', verifyAdminToken, adminDeleteUser);
+router.post('/digital-marketing-user', verifyAdminToken, register);
+//content creator
+router.delete('/content-creator/:userId', verifyAdminToken, adminDeleteContentCreator);
+router.post('/content-creator', verifyAdminToken, registerContentCreator);
+//marketing task
+router.get('/marketing-user-task/:userId', verifyAdminToken, getTasksByUserId);
 module.exports = router;

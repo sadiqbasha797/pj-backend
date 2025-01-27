@@ -12,6 +12,8 @@ const messageRoutes = require('./routes/messageRoutes');
 const http = require('http');
 const socketIO = require('socket.io');
 const clientRoutes = require('./routes/clientRoutes');
+const digitalMarketingRoutes = require('./routes/digitalMarketingRoutes');
+const contentCreatorRoutes = require('./routes/contentCreatorRoutes');
 // Middleware
 app.use(cors());
 app.use(bodyParser.json()); // bodyParser is deprecated, Express has its own now
@@ -35,6 +37,8 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/developer', developerRoutes); // Use developer routes
 app.use('/api/message', messageRoutes);
 app.use('/api/client', clientRoutes);
+app.use('/api/digital-marketing', digitalMarketingRoutes);
+app.use('/api/content-creator', contentCreatorRoutes);
 const server = http.createServer(app);
 const io = socketIO(server, {
   cors: {

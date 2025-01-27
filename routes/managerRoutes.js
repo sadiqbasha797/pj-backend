@@ -52,7 +52,19 @@ const { getAllManagers, getAllAdmins, markNotificationAsRead  } = require('../co
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/cloudinary');
-
+const { 
+    createMarketingTask,
+    updateMarketingTask,
+    getAllMarketingTasks,
+    getMarketingTaskById,
+    getMarketingTasksByProject,
+    deleteMarketingTask,
+    updateLeadsCount
+} = require('../controllers/marketingTaskController');
+const {addComment, deleteComment, getProjectTaskUpdates,getTaskUpdates} = require('../controllers/taskUpdateController');
+const {createRevenue, deleteRevenue, updateRevenue} = require('../controllers/revenueController');
+const {getAllMembers} = require('../controllers/digitalMarketingController');
+const {getAllContentCreatorMembers} = require('../controllers/contentCreatorController');
 // Register a new manager
 router.post('/register', verifyAdminToken, registerManager);
 router.post('/register-dev', verifyAdminToken, registerDeveloper);
@@ -129,4 +141,63 @@ router.put('/update-media',
   updateManagerMedia
 );
 
+// Marketing Task Routes
+router.post(
+    '/marketing-task', 
+    verifyManagerToken, 
+    upload.array('relatedDocs', 5), 
+    createMarketingTask
+);
+
+router.put(
+    '/marketing-task/:taskId', 
+    verifyManagerToken, 
+    upload.array('relatedDocs', 5), 
+    updateMarketingTask
+);
+
+router.get(
+    '/marketing-tasks', 
+    verifyManagerToken, 
+    getAllMarketingTasks
+);
+
+router.get(
+    '/marketing-task/:taskId', 
+    verifyManagerToken, 
+    getMarketingTaskById
+);
+
+router.get(
+    '/project/:projectId/marketing-tasks', 
+    verifyManagerToken, 
+    getMarketingTasksByProject
+);
+
+router.delete(
+    '/marketing-task/:taskId', 
+    verifyManagerToken, 
+    deleteMarketingTask
+);
+
+router.put(
+    '/marketing-task/:taskId/leads', 
+    verifyManagerToken, 
+    updateLeadsCount
+);
+
+//comment
+router.post('/comment/:updateId', verifyManagerToken, addComment);
+router.delete('/comment/:updateId/:commentId', verifyManagerToken, deleteComment);
+//revenue
+router.post('/revenue', verifyManagerToken, createRevenue);
+router.delete('/revenue/:revenueId', verifyManagerToken, deleteRevenue);
+router.put('/revenue/:revenueId', verifyManagerToken, updateRevenue);
+//digital marketing
+router.get('/digital-marketing-members', verifyManagerToken, getAllMembers);
+//content creator
+router.get('/content-creator-members', verifyManagerToken, getAllContentCreatorMembers);  
+//task updates
+router.get('/task-updates/:taskId', verifyManagerToken, getTaskUpdates);
+router.get('/project-task-updates/:projectId', verifyManagerToken, getProjectTaskUpdates);
 module.exports = router;

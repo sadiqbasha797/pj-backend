@@ -32,7 +32,7 @@ const CalendarEventSchema = new Schema({
     onModel: {
         type: String,
         required: true,
-        enum: ['Admin', 'Manager', 'Developer', 'Client'] // Models allowed to create the event
+        enum: ['Admin', 'Manager', 'Developer', 'Client', 'DigitalMarketingRole', 'ContentCreator'] // Added new roles
     },
     participants: [{
         participantId: {
@@ -42,7 +42,7 @@ const CalendarEventSchema = new Schema({
         onModel: {
             type: String,
             required: true,
-            enum: ['Admin', 'Manager', 'Developer', 'Client']
+            enum: ['Admin', 'Manager', 'Developer', 'Client', 'DigitalMarketingRole', 'ContentCreator'] // Added new roles
         }
     }],
     location: {
